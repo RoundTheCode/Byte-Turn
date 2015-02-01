@@ -6,9 +6,9 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Byte Turn")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("File manager tool for a .NET application that allows retrieving the properties of an individual file or directory, such as the name, the size, the extension name, when it was created and much more. A directory listing can also be retrieved listing all the properties for the files and directories that reside within that path. The tool also allows the ability to create, move, copy and delete files and directories.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("Round The Code")]
 [assembly: AssemblyProduct("")]
 [assembly: AssemblyCopyright("Copyright RoundTheCode © 2015")]
 [assembly: AssemblyTrademark("")]

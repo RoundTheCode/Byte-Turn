@@ -5,9 +5,13 @@
     <title>Byte Turn</title>
 		<version>0.1.0.0</version>
 		<authors>Round The Code</authors>
-		<description>File manager tool for a .NET application that allows retrieving the properties of an individual file or directory, such as the name, the size, the extension name, when it was created and much more. A directory listing can also be retrieved listing all the properties for the files and directories that reside within that path. The tool also allows the ability to create, move, copy and delete files and directories.</description>
+		<description>File manager tool for a .NET application that allows retrieving the properties of an individual file or directory, such as the name, the size, the extension name, when it was created and much more. A directory listing can also be retrieved listing all the properties for the files and directories that reside within that path. The tool also allows the ability to create, move, copy and delete files and directories.
+
+Disclaimer: Use at your own risk. Round The Code cannot be responsible for any loss or damage that Byte Turn may have towards your file system.</description>
+    <summary>File manager tool for a .NET application that gets directory listings and allows for creating, copying, moving, deleting files and directories.</summary>
+    <copyright>© RoundTheCode 2015</copyright>
     <tags>File Directory .NET Listing</tags>
-    <!--<projectUrl>http://www.roundthecode.com/byte-turn/</projectUrl>-->
+    <projectUrl>http://www.roundthecode.com/byte-turn/</projectUrl>
     <iconUrl>http://www.roundthecode.com/favicon.ico</iconUrl>
 		<frameworkAssemblies>
 			<frameworkAssembly assemblyName="System.IO" targetFramework="net40" />	
