@@ -10,6 +10,8 @@ using RoundTheCode.ByteTurn.Extensions;
 namespace RoundTheCode.ByteTurn.Services
 {
     using Exception = System.Exception;
+    using System.Security.AccessControl;
+using System.Web;
 
     public static class ListingService
     {
@@ -61,15 +63,15 @@ namespace RoundTheCode.ByteTurn.Services
                 }
                 catch (IOException ioex)
                 {
-                    throw new FileMileException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders), ioex);
                 }
                 catch (UnauthorizedAccessException uaex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
                 }
                 catch (Exception ex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                    throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                 }
             }
             else if (Directory.Exists(path))
@@ -80,22 +82,22 @@ namespace RoundTheCode.ByteTurn.Services
                 }
                 catch (IOException ioex)
                 {
-                    throw new FileMileException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders), ioex);
                 }
                 catch (UnauthorizedAccessException uaex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
                 }
                 catch (Exception ex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                    throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                 }
             }
             else
             {
 
 
-                throw new FileMileException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
         }
 
@@ -132,11 +134,11 @@ namespace RoundTheCode.ByteTurn.Services
 
             if (!File.Exists(currentPath))
             {
-                throw new FileMileException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
             else if (Exists(destPath))
             {
-                throw new FileMileException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
+                throw new ByteTurnException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
             }
             else if (File.Exists(currentPath) && !Exists(destPath))
             {
@@ -146,23 +148,23 @@ namespace RoundTheCode.ByteTurn.Services
                 }
                 catch (UnauthorizedAccessException unex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
                 }
                 catch (PathTooLongException ptlex)
                 {
-                    throw new FileMileException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
                 }
                 catch (IOException ioex)
                 {
-                    throw new FileMileException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
                 }
                 catch (NotSupportedException nsex)
                 {
-                    throw new FileMileException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
                 }
                 catch (Exception ex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                    throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                 }
             }
 
@@ -203,19 +205,19 @@ namespace RoundTheCode.ByteTurn.Services
                         }
                         catch (UnauthorizedAccessException uaex)
                         {
-                            throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                            throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
                         }
                         catch (PathTooLongException ptlex)
                         {
-                            throw new FileMileException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                            throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
                         }
                         catch (NotSupportedException nsex)
                         {
-                            throw new FileMileException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                            throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
                         }
                         catch (Exception ex)
                         {
-                            throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                            throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                         }
                     }
                     else if (listingType == ListingTypeOption.File)
@@ -226,19 +228,19 @@ namespace RoundTheCode.ByteTurn.Services
                         }
                         catch (UnauthorizedAccessException uaex)
                         {
-                            throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                            throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
                         }
                         catch (PathTooLongException ptlex)
                         {
-                            throw new FileMileException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                            throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
                         }
                         catch (NotSupportedException nsex)
                         {
-                            throw new FileMileException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                            throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
                         }
                         catch (Exception ex)
                         {
-                            throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                            throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                         }
                     }
                 }
@@ -246,7 +248,7 @@ namespace RoundTheCode.ByteTurn.Services
             else
             {
 
-                throw new FileMileException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
             return path;
         }
@@ -267,11 +269,11 @@ namespace RoundTheCode.ByteTurn.Services
 
             if (!File.Exists(currentPath) && !Directory.Exists(currentPath))
             {
-                throw new FileMileException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
             else if (Exists(destPath))
             {
-                throw new FileMileException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
+                throw new ByteTurnException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
             }
             else if (File.Exists(currentPath) && !Exists(destPath))
             {
@@ -281,23 +283,23 @@ namespace RoundTheCode.ByteTurn.Services
                 }
                 catch (UnauthorizedAccessException unex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
                 }
                 catch (PathTooLongException ptlex)
                 {
-                    throw new FileMileException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
                 }
                 catch (IOException ioex)
                 {
-                    throw new FileMileException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
                 }
                 catch (NotSupportedException nsex)
                 {
-                    throw new FileMileException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
                 }
                 catch (Exception ex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                    throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                 }
             }
             else if (Directory.Exists(currentPath) && !File.Exists(destPath) && !Directory.Exists(destPath))
@@ -308,27 +310,74 @@ namespace RoundTheCode.ByteTurn.Services
                 }
                 catch (UnauthorizedAccessException unex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
                 }
                 catch (PathTooLongException ptlex)
                 {
-                    throw new FileMileException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
                 }
                 catch (IOException ioex)
                 {
-                    throw new FileMileException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
                 }
                 catch (NotSupportedException nsex)
                 {
-                    throw new FileMileException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
                 }
                 catch (Exception ex)
                 {
-                    throw new FileMileException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                    throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                 }
             }
 
             return destPath;
+        }
+
+
+        /// <summary>
+        /// Upload a file to a specific directory.
+        /// </summary>
+        /// <param name="context">The HTTP context. If running from a web application, this would be HttpContext.Current.</param>
+        /// <param name="file">The class that stores the file details.</param>
+        /// <param name="directory">The class that stores the file details.</param>
+        /// <param name="extension">The extension that the file being uploaded should be.</param>
+        /// <returns>True if the file successfully uploaded. Otherwise false.</returns>
+        public static bool Upload(HttpContextBase context, HttpPostedFileBase file, string directory, string extension, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
+        {
+            if (file != null && file.ContentLength > 0)
+            {
+                var path = context.Server.MapPath(ListingExtensions.FormatDirectory(directory)) + "/" + file.FileName;
+
+                if (string.IsNullOrWhiteSpace(extension) || extension != path.Substring(path.Length - extension.Length, extension.Length))
+                {
+                    var placeholders = new List<string>();
+                    placeholders.Add(extension);
+
+                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_ILLEGAL_FILE.ToErrorMessage(placeholders));
+                }
+                else
+                {
+                    path = DuplicateListingActions(path, duplicateListingAction);
+
+                    try
+                    {
+                        file.SaveAs(path);
+                    }
+                    catch (NotImplementedException nlex)
+                    {
+                        var placeholders = new List<string>();
+
+                        throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), nlex);
+                    }
+                    catch (Exception ex)
+                    {
+                        var placeholders = new List<string>();
+
+                        throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), ex);
+                    }
+                }
+            }
+            return true;
         }
 
         /// <summary>

@@ -14,7 +14,8 @@ Disclaimer: Use at your own risk. Round The Code cannot be responsible for any l
     <projectUrl>http://www.roundthecode.com/byte-turn/</projectUrl>
     <iconUrl>http://www.roundthecode.com/favicon.ico</iconUrl>
 		<frameworkAssemblies>
-			<frameworkAssembly assemblyName="System.IO" targetFramework="net40" />	
-		</frameworkAssemblies>
+			<frameworkAssembly assemblyName="System.IO" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
+    </frameworkAssemblies>
 	</metadata>
 </package> 
