@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RoundTheCode.ByteTurn.Data.Listing;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -21,6 +22,18 @@ namespace RoundTheCode.ByteTurn.Extensions
             }
 
             return dir;
+        }
+
+        public static string FormatExtension(string extension)
+        {
+            if (!string.IsNullOrWhiteSpace(extension))
+            {
+                if (!extension.StartsWith("."))
+                {
+                    extension = "." + extension;
+                }
+            }
+            return extension;
         }
 
         public static long GetMaxRequestLength()
@@ -55,27 +68,29 @@ namespace RoundTheCode.ByteTurn.Extensions
 
         public static string GetSizeTitle(long bytes)
         {
+            var size = new FileSize(bytes);
+
             var sizeConversion = (long)1024;
 
-            if (bytes < sizeConversion)
+            if (size.Bytes < sizeConversion)
             {
                 return bytes + " bytes";
             }
-            else if (bytes < (sizeConversion * sizeConversion))
+            else if (size.Bytes < (sizeConversion * sizeConversion))
             {
-                return (bytes / 1024).ToString("0.0") + " KB";
+                return size.Kilobytes.ToString("0.0") + " KB";
             }
-            else if (bytes < (sizeConversion * sizeConversion * sizeConversion))
+            else if (size.Bytes < (sizeConversion * sizeConversion * sizeConversion))
             {
-                return (bytes / 1024 / 1024).ToString("0.0") + " MB";
+                return size.Megabytes.ToString("0.0") + " MB";
             }
-            else if (bytes < (sizeConversion * sizeConversion * sizeConversion * sizeConversion))
+            else if (size.Bytes < (sizeConversion * sizeConversion * sizeConversion * sizeConversion))
             {
-                return (bytes / 1024 / 1024 / 1024).ToString("0.0") + " GB";
+                return size.Gigabytes.ToString("0.0") + " GB";
             }
             else
             {
-                return (bytes / 1024 / 1024 / 1024 / 1024).ToString("0.0") + " TB";
+                return size.Terabytes.ToString("0.0") + " TB";
             }
         }
     }

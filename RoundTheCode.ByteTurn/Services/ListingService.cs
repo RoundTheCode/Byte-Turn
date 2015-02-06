@@ -186,41 +186,41 @@ using System.Web;
             var placeHolders = new List<string>();
             placeHolders.Add("Unable to create the file '" + name + "' into '" + originalPath + ". ");
 
-            if (Directory.Exists(path))
+            if (!path.EndsWith(@"\") && !path.EndsWith("/"))
+                path += @"\";           
+
+            path += name;
+
+            path = DuplicateListingActions(path, duplicateListingAction);
+
+            if (!Exists(path))
             {
-                if (!path.EndsWith(@"\") && !path.EndsWith("/"))
-                    path += @"\";
-
-                path += name;
-
-                path = DuplicateListingActions(path, duplicateListingAction);
-
-                if (!Exists(path))
+                if (listingType == ListingTypeOption.Directory)
                 {
-                    if (listingType == ListingTypeOption.Directory)
+                    try
                     {
-                        try
-                        {
-                            Directory.CreateDirectory(path);
-                        }
-                        catch (UnauthorizedAccessException uaex)
-                        {
-                            throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
-                        }
-                        catch (PathTooLongException ptlex)
-                        {
-                            throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
-                        }
-                        catch (NotSupportedException nsex)
-                        {
-                            throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
-                        }
+                        Directory.CreateDirectory(path);
                     }
-                    else if (listingType == ListingTypeOption.File)
+                    catch (UnauthorizedAccessException uaex)
+                    {
+                        throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                    }
+                    catch (PathTooLongException ptlex)
+                    {
+                        throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    }
+                    catch (NotSupportedException nsex)
+                    {
+                        throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    }
+                    catch (Exception ex)
+                    {
+                        throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
+                    }
+                }
+                else if (listingType == ListingTypeOption.File)
+                {
+                    if (Directory.Exists(originalPath))
                     {
                         try
                         {
@@ -243,13 +243,13 @@ using System.Web;
                             throw new ByteTurnException(ErrorMessageOption.UNKNOWN.ToErrorMessage(placeHolders), ex);
                         }
                     }
+                    else
+                    {
+                        throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                    }
                 }
             }
-            else
-            {
 
-                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
-            }
             return path;
         }
 

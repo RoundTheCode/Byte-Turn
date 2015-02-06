@@ -21,7 +21,8 @@ namespace RoundTheCode.ByteTurn.Services
         /// <param name="file">The class that stores the file details.</param>
         /// <param name="directory">The class that stores the file details.</param>
         /// <param name="allowedExtension">The extension that the file being uploaded should be. e.g. A text file would be 'txt'.</param>
-        public static void WebUpload(HttpContextBase context, HttpPostedFileBase file, string directory, string allowedExtension, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
+        /// <returns>The full path as to where the file has been uploaded.</returns>
+        public static string WebUpload(HttpContextBase context, HttpPostedFileBase file, string directory, string allowedExtension, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
         {
             List<string> allowedExtensions = null;
             
@@ -30,7 +31,7 @@ namespace RoundTheCode.ByteTurn.Services
                 allowedExtensions.Add(allowedExtension);
             }
             
-            WebUpload(context, file, directory, allowedExtensions, duplicateListingAction);
+            return WebUpload(context, file, directory, allowedExtensions, duplicateListingAction);
         }
 
 
@@ -41,7 +42,8 @@ namespace RoundTheCode.ByteTurn.Services
         /// <param name="file">The class that stores the file details.</param>
         /// <param name="directory">The class that stores the file details.</param>
         /// <param name="allowedExtensions">A list of extensions that the file being uploaded should be. e.g. A text file would be 'txt'.</param>
-        public static void WebUpload(HttpContextBase context, HttpPostedFileBase file, string directory, List<string> allowedExtensions, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
+        /// <returns>The full path as to where the file has been uploaded.</returns>
+        public static string WebUpload(HttpContextBase context, HttpPostedFileBase file, string directory, List<string> allowedExtensions, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
         {
             // File doesn't exist, so throw exception.
             if (file == null)
@@ -49,6 +51,21 @@ namespace RoundTheCode.ByteTurn.Services
                 var placeholders = new List<string>();
 
                 throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_NOT_EXISTS.ToErrorMessage(placeholders));
+            }
+
+            if (!Exists(directory))
+            {
+                // Create directory if it does not exist.
+                Create("", directory, ListingTypeOption.Directory, DuplicateListingActionOption.NoAction);
+            }
+
+            // Ensure all allowed extensions have a dot next to them.
+            if (allowedExtensions != null)
+            {
+                for (var tt = 1; tt <= allowedExtensions.Count; tt++)
+                {
+                    allowedExtensions[tt - 1] = ListingExtensions.FormatExtension(allowedExtensions[tt - 1]);
+                }
             }
 
             var maxRequestLength = ListingExtensions.GetMaxRequestLength();
@@ -112,13 +129,13 @@ namespace RoundTheCode.ByteTurn.Services
                     // Save the file.
                     file.SaveAs(path);
                 }
-                catch (NotImplementedException nlex)
-                {
+                catch (UnauthorizedAccessException uaex)
+                {                    
                     // Unable to save the file.
                     var placeholders = new List<string>();
                     placeholders.Add(directory);
 
-                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), nlex);
+                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED.ToErrorMessage(placeholders), uaex);
                 }
                 catch (Exception ex)
                 {
@@ -129,6 +146,8 @@ namespace RoundTheCode.ByteTurn.Services
                     throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), ex);
                 }
             }
+
+            return path;
         }
     }
 }
