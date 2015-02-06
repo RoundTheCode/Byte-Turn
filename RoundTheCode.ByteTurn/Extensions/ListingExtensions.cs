@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
+using System.Web.Configuration;
+using System.Xml.Linq;
 
 namespace RoundTheCode.ByteTurn.Extensions
 {
@@ -18,6 +21,62 @@ namespace RoundTheCode.ByteTurn.Extensions
             }
 
             return dir;
+        }
+
+        public static long GetMaxRequestLength()
+        {
+            var limit = (long)30000000;
+
+            Configuration configuration = WebConfigurationManager.OpenWebConfiguration("~");
+            var section = configuration.GetSection("system.webServer");
+
+            if (section != null)
+            {
+                long trylimit = 0;
+
+                var xml = section.SectionInformation.GetRawXml();
+                var doc = XDocument.Parse(xml);
+
+                if (doc.Root != null && doc.Root.Element("security") != null && doc.Root.Element("security").Element("requestFiltering") != null && doc.Root.Element("security").Element("requestFiltering").Element("requestLimits") != null && doc.Root.Element("security").Element("requestFiltering").Element("requestLimits").Attribute("maxAllowedContentLength") != null && long.TryParse(doc.Root.Element("security").Element("requestFiltering").Element("requestLimits").Attribute("maxAllowedContentLength").Value, out trylimit))
+                {
+                    limit = trylimit;
+                }
+            }
+            else
+            {
+                HttpRuntimeSection s2 = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+                if (s2 != null)
+                {
+                    limit = s2.MaxRequestLength;
+                }
+            }
+            return limit;
+        }
+
+        public static string GetSizeTitle(long bytes)
+        {
+            var sizeConversion = (long)1024;
+
+            if (bytes < sizeConversion)
+            {
+                return bytes + " bytes";
+            }
+            else if (bytes < (sizeConversion * sizeConversion))
+            {
+                return (bytes / 1024).ToString("0.0") + " KB";
+            }
+            else if (bytes < (sizeConversion * sizeConversion * sizeConversion))
+            {
+                return (bytes / 1024 / 1024).ToString("0.0") + " MB";
+            }
+            else if (bytes < (sizeConversion * sizeConversion * sizeConversion * sizeConversion))
+            {
+                return (bytes / 1024 / 1024 / 1024).ToString("0.0") + " GB";
+            }
+            else
+            {
+                return (bytes / 1024 / 1024 / 1024 / 1024).ToString("0.0") + " TB";
+            }
         }
     }
 }

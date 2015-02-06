@@ -30,9 +30,16 @@ namespace RoundTheCode.ByteTurn.Extensions
                 case ErrorMessageOption.NOT_SUPPORTED:
                     return ReturnErrorMessage("{p[0]}The path name is in an invalid format.", placeholders);
                 case ErrorMessageOption.UPLOAD_ILLEGAL_FILE:
-                    return ReturnErrorMessage("Unable to upload the file. The file being uploaded needs to have an extension of '{p[0]}'.", placeholders);
+                    return ReturnErrorMessage("Unable to upload the file. The file being uploaded needs to have an extension of {p[0]}.", placeholders);
                 case ErrorMessageOption.UPLOAD_FILE_FAILURE:
-                    return ReturnErrorMessage("Unable to upload the file. This is likely due to a permission issue.", placeholders);
+                    return ReturnErrorMessage("Unable to upload the file. This is likely due to insufficient permissions with uploading to '{p[0]}'.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_NOT_EXISTS:
+                    return ReturnErrorMessage("Unable to upload the file. The file does not exist.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_TOO_LARGE:
+                    return ReturnErrorMessage("Unable to upload the file. The file is too large. There is an upload limit of '{p[0]}'.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_EXISTS:
+                    return ReturnErrorMessage("Unable to upload the file. The file '{p[0]}' already exists.", placeholders);
+
             }
             return "";
         }

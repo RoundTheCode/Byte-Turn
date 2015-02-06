@@ -16,6 +16,9 @@ namespace RoundTheCode.ByteTurn.Exception
         IO_ERROR = 7,
         NOT_SUPPORTED = 8,
         UPLOAD_ILLEGAL_FILE = 9,
-        UPLOAD_FILE_FAILURE = 10
+        UPLOAD_FILE_FAILURE = 10,
+        UPLOAD_FILE_NOT_EXISTS = 11,
+        UPLOAD_FILE_TOO_LARGE = 12,
+        UPLOAD_FILE_EXISTS = 13
     }
 }

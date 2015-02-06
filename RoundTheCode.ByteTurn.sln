@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoundTheCode.ByteTurn", "Ro
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoundTheCode.ByteTurn.Console", "RoundTheCode.ByteTurn.Console\RoundTheCode.ByteTurn.Console.csproj", "{8FC2E27C-498E-4D1D-ADFA-4130BCCA0BB3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RoundTheCode.ByteTurn.Web", "RoundTheCode.ByteTurn.Web\RoundTheCode.ByteTurn.Web.csproj", "{261AAB39-DED5-430C-8AD6-DD57E30FF469}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{8FC2E27C-498E-4D1D-ADFA-4130BCCA0BB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8FC2E27C-498E-4D1D-ADFA-4130BCCA0BB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8FC2E27C-498E-4D1D-ADFA-4130BCCA0BB3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261AAB39-DED5-430C-8AD6-DD57E30FF469}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261AAB39-DED5-430C-8AD6-DD57E30FF469}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261AAB39-DED5-430C-8AD6-DD57E30FF469}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261AAB39-DED5-430C-8AD6-DD57E30FF469}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

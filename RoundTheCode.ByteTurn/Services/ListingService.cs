@@ -13,7 +13,7 @@ namespace RoundTheCode.ByteTurn.Services
     using System.Security.AccessControl;
 using System.Web;
 
-    public static class ListingService
+    public static partial class ListingService
     {
         /// <summary>
         /// What to do when a file or directory being moved or copied already exists in it's specified destination path.
@@ -334,51 +334,6 @@ using System.Web;
         }
 
 
-        /// <summary>
-        /// Upload a file to a specific directory.
-        /// </summary>
-        /// <param name="context">The HTTP context. If running from a web application, this would be HttpContext.Current.</param>
-        /// <param name="file">The class that stores the file details.</param>
-        /// <param name="directory">The class that stores the file details.</param>
-        /// <param name="extension">The extension that the file being uploaded should be.</param>
-        /// <returns>True if the file successfully uploaded. Otherwise false.</returns>
-        public static bool Upload(HttpContextBase context, HttpPostedFileBase file, string directory, string extension, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
-        {
-            if (file != null && file.ContentLength > 0)
-            {
-                var path = context.Server.MapPath(ListingExtensions.FormatDirectory(directory)) + "/" + file.FileName;
-
-                if (string.IsNullOrWhiteSpace(extension) || extension != path.Substring(path.Length - extension.Length, extension.Length))
-                {
-                    var placeholders = new List<string>();
-                    placeholders.Add(extension);
-
-                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_ILLEGAL_FILE.ToErrorMessage(placeholders));
-                }
-                else
-                {
-                    path = DuplicateListingActions(path, duplicateListingAction);
-
-                    try
-                    {
-                        file.SaveAs(path);
-                    }
-                    catch (NotImplementedException nlex)
-                    {
-                        var placeholders = new List<string>();
-
-                        throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), nlex);
-                    }
-                    catch (Exception ex)
-                    {
-                        var placeholders = new List<string>();
-
-                        throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), ex);
-                    }
-                }
-            }
-            return true;
-        }
 
         /// <summary>
         /// Gets file or directory info depending if it exists.

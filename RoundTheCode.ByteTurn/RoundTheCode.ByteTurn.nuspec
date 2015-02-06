@@ -16,6 +16,7 @@ Disclaimer: Use at your own risk. Round The Code cannot be responsible for any l
 		<frameworkAssemblies>
 			<frameworkAssembly assemblyName="System.IO" targetFramework="net40" />
       <frameworkAssembly assemblyName="System.Web" targetFramework="net40" />
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework="net40" />
     </frameworkAssemblies>
 	</metadata>
 </package> 
