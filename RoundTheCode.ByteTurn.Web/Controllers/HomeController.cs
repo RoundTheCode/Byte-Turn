@@ -25,7 +25,7 @@ namespace RoundTheCode.ByteTurn.Web.Controllers
             allowedFileExtensions.Add("gif");
             allowedFileExtensions.Add("png");
 
-            var path = ListingService.WebUpload(HttpContext, FileUpload, @"C:\Users\David\Projects\RoundTheCode.ByteTurn\branches\20140205\RoundTheCode.ByteTurn.Web\Upload\2\4", allowedFileExtensions, Data.Listing.DuplicateListingActionOption.AppendNumber);
+            var path = ListingService.WebUpload(HttpContext, FileUpload, Server.MapPath(@"Upload\2\4"), allowedFileExtensions, Data.Listing.DuplicateListingActionOption.AppendNumber);
 
             Response.Write("Path was uploaded at '" + path + "'");
 

@@ -73,7 +73,7 @@ namespace RoundTheCode.ByteTurn.Services
             var maxRequestLength = ListingExtensions.GetMaxRequestLength();
 
             // Convert file & directory to full path.
-            var path = ListingExtensions.FormatDirectory(directory) + "/" + file.FileName;
+            var path = ListingExtensions.FormatDirectory(directory) + @"\" + file.FileName;
 
             if (allowedExtensions == null || allowedExtensions.FirstOrDefault(x => x.ToLower() == path.Substring(path.Length - x.Length, x.Length).ToLower()) == null)
             {
