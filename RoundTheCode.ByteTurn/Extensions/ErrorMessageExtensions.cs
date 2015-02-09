@@ -20,7 +20,7 @@ namespace RoundTheCode.ByteTurn.Extensions
                 case ErrorMessageOption.FILE_IN_USE:
                     return ReturnErrorMessage("{p[0]}Unauthorised access to perform that action. The specified file is in use.", placeholders);
                 case ErrorMessageOption.UNAUTHORISED:
-                    return ReturnErrorMessage("{p[0]}Unauthorised access to perform that action. This may be due to insufficient permissions, the file is in use, or the file is read only.", placeholders);
+                    return ReturnErrorMessage("{p[0]}Unauthorised access to perform that action. This may be due to insufficient permissions{p[1]}.", placeholders);
                 case ErrorMessageOption.UNKNOWN:
                     return ReturnErrorMessage("{p[0]}An unknown error occured.", placeholders);
                 case ErrorMessageOption.PATH_TOO_LONG:

@@ -184,7 +184,7 @@ using System.Web;
             string originalPath = path;
 
             var placeHolders = new List<string>();
-            placeHolders.Add("Unable to create the file '" + name + "' into '" + originalPath + ". ");
+
 
             if (!path.EndsWith(@"\") && !path.EndsWith("/"))
                 path += @"\";           
@@ -197,6 +197,8 @@ using System.Web;
             {
                 if (listingType == ListingTypeOption.Directory)
                 {
+                    placeHolders.Add("Unable to create the directory '" + path + "'. ");
+
                     try
                     {
                         Directory.CreateDirectory(path);
@@ -220,6 +222,9 @@ using System.Web;
                 }
                 else if (listingType == ListingTypeOption.File)
                 {
+                    placeHolders.Add("Unable to create the file '" + name + "' into '" + originalPath + ". ");
+                    placeHolders.Add(", the file is in use, or the file is read only");
+
                     if (Directory.Exists(originalPath))
                     {
                         try
