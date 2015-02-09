@@ -55,8 +55,10 @@ namespace RoundTheCode.ByteTurn.Services
 
             if (!Exists(directory))
             {
+                var d = new DirectoryData(directory);
+
                 // Create directory if it does not exist.
-                Create("", directory, ListingTypeOption.Directory, DuplicateListingActionOption.NoAction);
+                Create(d.Name, d.Directory, ListingTypeOption.Directory, DuplicateListingActionOption.NoAction);
             }
 
             // Ensure all allowed extensions have a dot next to them.
