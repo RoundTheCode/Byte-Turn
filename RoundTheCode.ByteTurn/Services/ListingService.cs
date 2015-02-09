@@ -61,13 +61,13 @@ using System.Web;
                 {
                     File.Delete(path);
                 }
-                catch (IOException ioex)
+                catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders));
                 }
-                catch (UnauthorizedAccessException uaex)
+                catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -80,13 +80,13 @@ using System.Web;
                 {
                     Directory.Delete(path);
                 }
-                catch (IOException ioex)
+                catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders));
                 }
-                catch (UnauthorizedAccessException uaex)
+                catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -146,21 +146,21 @@ using System.Web;
                 {
                     File.Copy(currentPath, destPath);
                 }
-                catch (UnauthorizedAccessException unex)
+                catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
-                catch (PathTooLongException ptlex)
+                catch (PathTooLongException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                 }
-                catch (IOException ioex)
+                catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
                 }
-                catch (NotSupportedException nsex)
+                catch (NotSupportedException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -201,17 +201,17 @@ using System.Web;
                     {
                         Directory.CreateDirectory(path);
                     }
-                    catch (UnauthorizedAccessException uaex)
+                    catch (UnauthorizedAccessException)
                     {
-                        throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                        throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                     }
-                    catch (PathTooLongException ptlex)
+                    catch (PathTooLongException)
                     {
-                        throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                        throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                     }
-                    catch (NotSupportedException nsex)
+                    catch (NotSupportedException)
                     {
-                        throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                        throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                     }
                     catch (Exception ex)
                     {
@@ -226,17 +226,17 @@ using System.Web;
                         {
                             File.Create(path);
                         }
-                        catch (UnauthorizedAccessException uaex)
+                        catch (UnauthorizedAccessException)
                         {
-                            throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), uaex);
+                            throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                         }
-                        catch (PathTooLongException ptlex)
+                        catch (PathTooLongException)
                         {
-                            throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                            throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                         }
-                        catch (NotSupportedException nsex)
+                        catch (NotSupportedException)
                         {
-                            throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                            throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                         }
                         catch (Exception ex)
                         {
@@ -281,21 +281,21 @@ using System.Web;
                 {
                     File.Move(currentPath, destPath);
                 }
-                catch (UnauthorizedAccessException unex)
+                catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
-                catch (PathTooLongException ptlex)
+                catch (PathTooLongException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                 }
-                catch (IOException ioex)
+                catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
                 }
-                catch (NotSupportedException nsex)
+                catch (NotSupportedException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -308,21 +308,21 @@ using System.Web;
                 {
                     Directory.Move(currentPath, destPath);
                 }
-                catch (UnauthorizedAccessException unex)
+                catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders), unex);
+                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
-                catch (PathTooLongException ptlex)
+                catch (PathTooLongException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders), ptlex);
+                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                 }
-                catch (IOException ioex)
+                catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders), ioex);
+                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
                 }
-                catch (NotSupportedException nsex)
+                catch (NotSupportedException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders), nsex);
+                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {

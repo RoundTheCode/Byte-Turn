@@ -131,13 +131,13 @@ namespace RoundTheCode.ByteTurn.Services
                     // Save the file.
                     file.SaveAs(path);
                 }
-                catch (UnauthorizedAccessException uaex)
+                catch (UnauthorizedAccessException)
                 {                    
                     // Unable to save the file.
                     var placeholders = new List<string>();
                     placeholders.Add(directory);
 
-                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED.ToErrorMessage(placeholders), uaex);
+                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED.ToErrorMessage(placeholders));
                 }
                 catch (Exception ex)
                 {
