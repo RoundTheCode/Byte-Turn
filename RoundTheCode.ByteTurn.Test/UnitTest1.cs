@@ -27,7 +27,7 @@ namespace RoundTheCode.ByteTurn.Test
                 ListingService.Create("Test", parentPath, Data.Listing.ListingTypeOption.Directory, Data.Listing.DuplicateListingActionOption.NoAction);
             }
 
-            var deleteFiles = ListingService.GetListingByDirectory(path, false, true);
+            var deleteFiles = ListingService.GetListingByDirectory(path, true, true);
 
             foreach (var f in deleteFiles)
             {
@@ -98,6 +98,12 @@ namespace RoundTheCode.ByteTurn.Test
         }
 
         [TestMethod, Priority(-4)]
+        public void Copy()
+        {
+
+        }
+
+        [TestMethod, Priority(-5)]
         public void Delete()
         {
             // Delete non existance of file.
@@ -111,7 +117,11 @@ namespace RoundTheCode.ByteTurn.Test
                 Assert.AreEqual(typeof(ByteTurnException), byteturnex.GetType());
             }
 
-            ListingService.Delete(path + @"\testfile-2.txt");
+            var p = ListingService.Create("testfile-3.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
+
+            ListingService.Delete(path + @"\testfile-3.txt");
         }
+
+
     }
 }

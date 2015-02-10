@@ -229,7 +229,8 @@ using System.Web;
                     {
                         try
                         {
-                            File.Create(path);
+                            var f = File.Create(path);
+                            f.Close();
                         }
                         catch (UnauthorizedAccessException)
                         {
