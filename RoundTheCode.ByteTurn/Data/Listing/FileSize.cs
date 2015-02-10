@@ -45,6 +45,10 @@ namespace RoundTheCode.ByteTurn.Data.Listing
             Terabytes = (float)Bytes / 1024 / 1024 / 1024 / 1024;
         }
 
+        public bool IsEqual(FileSize compareFileSize)
+        {
+            return (this.Bytes == compareFileSize.Bytes && this.Kilobytes == compareFileSize.Kilobytes && this.Megabytes == compareFileSize.Megabytes && this.Gigabytes == compareFileSize.Gigabytes && this.Terabytes == compareFileSize.Terabytes);
+        }
 
     }
 }

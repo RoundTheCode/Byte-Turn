@@ -254,6 +254,23 @@ using System.Web;
                     }
                 }
             }
+            else
+            {
+                if (listingType == ListingTypeOption.File)
+                {
+                    var placeholders = new List<string>();
+                    placeholders.Add(path);
+
+                    throw new ByteTurnException(ErrorMessageOption.CREATE_FILE_EXISTS.ToErrorMessage(placeholders));
+                }
+                else
+                {
+                    var placeholders = new List<string>();
+                    placeholders.Add(path);
+
+                    throw new ByteTurnException(ErrorMessageOption.CREATE_DIRECTORY_EXISTS.ToErrorMessage(placeholders));
+                }                
+            }
 
             return path;
         }

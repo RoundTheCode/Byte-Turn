@@ -20,6 +20,8 @@ namespace RoundTheCode.ByteTurn.Exception
         UPLOAD_FILE_NOT_EXISTS = 11,
         UPLOAD_FILE_TOO_LARGE = 12,
         UPLOAD_FILE_EXISTS = 13,
-        UPLOAD_FILE_UNAUTHORISED = 14
+        UPLOAD_FILE_UNAUTHORISED = 14,
+        CREATE_FILE_EXISTS = 15,
+        CREATE_DIRECTORY_EXISTS = 16
     }
 }

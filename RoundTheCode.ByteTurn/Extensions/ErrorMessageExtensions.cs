@@ -41,7 +41,10 @@ namespace RoundTheCode.ByteTurn.Extensions
                     return ReturnErrorMessage("Unable to upload the file. The file '{p[0]}' already exists.", placeholders);
                 case ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED:
                     return ReturnErrorMessage("Unable to upload the file. This is due to insufficient permissions when uploading to '{p[0]}'.", placeholders);
-
+                case ErrorMessageOption.CREATE_FILE_EXISTS:
+                    return ReturnErrorMessage("Unable to create the file '{p[0]}'. The file already exists.", placeholders);
+                case ErrorMessageOption.CREATE_DIRECTORY_EXISTS:
+                    return ReturnErrorMessage("Unable to create the directory '{p[0]}'. The directory already exists.", placeholders);
             }
             return "";
         }
