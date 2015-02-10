@@ -83,5 +83,18 @@ namespace RoundTheCode.ByteTurn.Test
             //HttpContext.Current = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
 
         }
+
+        [TestMethod]
+        [Priority(5)]
+        public void CreateFileExistsAppendNumber()
+        {
+            var p = ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.AppendNumber);
+
+            Assert.AreEqual(p, path + @"\(1) testfile.txt");
+            Assert.AreEqual(ListingService.Exists(path + @"\(1) testfile.txt"), true);
+
+            //HttpContext.Current = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
+
+        }
     }
 }
