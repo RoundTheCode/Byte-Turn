@@ -15,7 +15,8 @@ namespace RoundTheCode.ByteTurn.Test
         public string parentPath = @"..\..\..\RoundTheCode.ByteTurn.Web";
         public string testPath = @"..\..\..\RoundTheCode.ByteTurn.Test\TestFiles";
 
-        public ListingInformation()
+        [TestInitializeAttribute]
+        public void Init()
         {
             path = Path.GetFullPath(path);
             parentPath = Path.GetFullPath(parentPath);
@@ -41,7 +42,7 @@ namespace RoundTheCode.ByteTurn.Test
             }
         }
 
-        [TestMethod]
+        [TestMethod, Priority(-1)]
         public void DirectoryInfo()
         {
             var d = new DirectoryData(path);
@@ -52,7 +53,7 @@ namespace RoundTheCode.ByteTurn.Test
             Assert.AreEqual(d.Name, "Test");        
         }
 
-        [TestMethod]
+        [TestMethod, Priority(-2)]
         public void FileInfo()
         {
             var f = new FileData(path + @"\testfile.txt");
@@ -65,36 +66,52 @@ namespace RoundTheCode.ByteTurn.Test
             Assert.AreEqual(f.Size.IsEqual(new FileSize(15)), true);
         }
 
-        
-        [TestMethod, ExpectedException(typeof(ByteTurnException))]
-        public void CreateFileExistsNoOverwrite()
+        [TestMethod, Priority(-3)]
+        public void Create()
         {
-            ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
-        }
+            try
+            {
+                ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
+                Assert.Fail();
+            }
+            catch (ByteTurnException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnException), byteturnex.GetType());
+            }
 
-        [TestMethod]
-        public void CreateFileExistsNew()
-        {
             var p = ListingService.Create("testfile-2.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
 
             Assert.AreEqual(p, path + @"\testfile-2.txt");
             Assert.AreEqual(ListingService.Exists(path + @"\testfile-2.txt"), true);
 
-            //HttpContext.Current = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
-
-        }
-
-        [TestMethod]
-        [Priority(5)]
-        public void CreateFileExistsAppendNumber()
-        {
-            var p = ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.AppendNumber);
+            p = ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.AppendNumber);
 
             Assert.AreEqual(p, path + @"\(1) testfile.txt");
             Assert.AreEqual(ListingService.Exists(path + @"\(1) testfile.txt"), true);
 
-            //HttpContext.Current = new HttpContext(new HttpRequest(null, "http://tempuri.org", null), new HttpResponse(null));
+            p = ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.Overwrite);
 
+            Assert.AreEqual(p, path + @"\testfile.txt");
+
+            var f = new FileData(p);
+            Assert.AreEqual(f.Size.IsEqual(new FileSize(0)), true);
+        }
+
+        [TestMethod, Priority(-4)]
+        public void Delete()
+        {
+            // Delete non existance of file.
+            try
+            {
+                ListingService.Delete(path + @"\delete.txt");
+                Assert.Fail();
+            }
+            catch (ByteTurnException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnException), byteturnex.GetType());
+            }
+
+            ListingService.Delete(path + @"\testfile-2.txt");
         }
     }
 }
