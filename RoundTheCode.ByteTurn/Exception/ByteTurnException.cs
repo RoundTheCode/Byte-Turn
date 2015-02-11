@@ -8,6 +8,9 @@ namespace RoundTheCode.ByteTurn.Exception
     using System.Runtime.Serialization;
 using Exception = System.Exception;
 
+    /// <summary>
+    /// Thrown if an unknown error has occured.
+    /// </summary>
     public partial class ByteTurnException : Exception
     {
         public ByteTurnException() : base() { }

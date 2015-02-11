@@ -50,7 +50,7 @@ namespace RoundTheCode.ByteTurn.Services
             {
                 var placeholders = new List<string>();
 
-                throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_NOT_EXISTS.ToErrorMessage(placeholders));
+                throw new ByteTurnNotFoundException(ErrorMessageOption.UPLOAD_FILE_NOT_EXISTS.ToErrorMessage(placeholders));
             }
 
             if (!Exists(directory))
@@ -123,7 +123,7 @@ namespace RoundTheCode.ByteTurn.Services
                     var placeholders = new List<string>();
                     placeholders.Add(path);
 
-                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_EXISTS.ToErrorMessage(placeholders));
+                    throw new ByteTurnExistsException(ErrorMessageOption.UPLOAD_FILE_EXISTS.ToErrorMessage(placeholders));
                 }
 
                 try
@@ -137,7 +137,7 @@ namespace RoundTheCode.ByteTurn.Services
                     var placeholders = new List<string>();
                     placeholders.Add(directory);
 
-                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED.ToErrorMessage(placeholders));
+                    throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED.ToErrorMessage(placeholders));
                 }
                 catch (Exception ex)
                 {
@@ -145,7 +145,7 @@ namespace RoundTheCode.ByteTurn.Services
                     var placeholders = new List<string>();
                     placeholders.Add(directory);
 
-                    throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), ex);
+                    throw new ByteTurnException(ErrorMessageOption.UPLOAD_FILE_FAILURE.ToErrorMessage(placeholders), ex);
                 }
             }
 

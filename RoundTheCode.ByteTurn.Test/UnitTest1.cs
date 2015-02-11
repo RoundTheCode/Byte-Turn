@@ -74,9 +74,9 @@ namespace RoundTheCode.ByteTurn.Test
                 ListingService.Create("testfile.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
                 Assert.Fail();
             }
-            catch (ByteTurnException byteturnex)
+            catch (ByteTurnExistsException byteturnex)
             {
-                Assert.AreEqual(typeof(ByteTurnException), byteturnex.GetType());
+                Assert.AreEqual(typeof(ByteTurnExistsException), byteturnex.GetType());
             }
 
             var p = ListingService.Create("testfile-2.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
@@ -100,7 +100,33 @@ namespace RoundTheCode.ByteTurn.Test
         [TestMethod, Priority(-4)]
         public void Copy()
         {
+            var p = ListingService.Create("testfile-4.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
 
+            // No action - file does not exist.
+            var f = ListingService.Copy(path + @"\testfile-4.txt", path + @"\testfile-42.txt", DuplicateListingActionOption.NoAction);
+            Assert.AreEqual(f, path + @"\testfile-42.txt");
+            Assert.AreEqual(ListingService.Exists(path + @"\testfile-42.txt"), true);
+
+            // No action - file exists.
+            try
+            {
+                f = ListingService.Copy(path + @"\testfile-4.txt", path + @"\testfile-42.txt", DuplicateListingActionOption.NoAction);
+                Assert.Fail();
+            }
+            catch (ByteTurnExistsException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnExistsException), byteturnex.GetType());
+            }
+
+            // Overwrite
+            f = ListingService.Copy(path + @"\testfile-4.txt", path + @"\testfile-42.txt", DuplicateListingActionOption.Overwrite);
+            Assert.AreEqual(f, path + @"\testfile-42.txt");
+            Assert.AreEqual(ListingService.Exists(path + @"\testfile-42.txt"), true);
+
+            // Append number
+            f = ListingService.Copy(path + @"\testfile-4.txt", path + @"\testfile-42.txt", DuplicateListingActionOption.AppendNumber);
+            Assert.AreEqual(f, path + @"\(1) testfile-42.txt");
+            Assert.AreEqual(ListingService.Exists(path + @"\(1) testfile-42.txt"), true);
         }
 
         [TestMethod, Priority(-5)]
@@ -112,9 +138,9 @@ namespace RoundTheCode.ByteTurn.Test
                 ListingService.Delete(path + @"\delete.txt");
                 Assert.Fail();
             }
-            catch (ByteTurnException byteturnex)
+            catch (ByteTurnNotFoundException byteturnex)
             {
-                Assert.AreEqual(typeof(ByteTurnException), byteturnex.GetType());
+                Assert.AreEqual(typeof(ByteTurnNotFoundException), byteturnex.GetType());
             }
 
             var p = ListingService.Create("testfile-3.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);

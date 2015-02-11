@@ -63,11 +63,11 @@ using System.Web;
                 }
                 catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders));
+                    throw new ByteTurnIOException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -82,11 +82,11 @@ using System.Web;
                 }
                 catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders));
+                    throw new ByteTurnIOException(ErrorMessageOption.FILE_IN_USE.ToErrorMessage(placeHolders));
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -97,7 +97,7 @@ using System.Web;
             {
 
 
-                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnNotFoundException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
         }
 
@@ -134,11 +134,11 @@ using System.Web;
 
             if (!File.Exists(currentPath))
             {
-                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnNotFoundException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
             else if (Exists(destPath))
             {
-                throw new ByteTurnException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
+                throw new ByteTurnExistsException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
             }
             else if (File.Exists(currentPath) && !Exists(destPath))
             {
@@ -148,19 +148,19 @@ using System.Web;
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (PathTooLongException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
+                    throw new ByteTurnPathTooLongException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                 }
                 catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
+                    throw new ByteTurnIOException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
                 }
                 catch (NotSupportedException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -205,15 +205,15 @@ using System.Web;
                     }
                     catch (UnauthorizedAccessException)
                     {
-                        throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                        throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                     }
                     catch (PathTooLongException)
                     {
-                        throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
+                        throw new ByteTurnPathTooLongException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                     }
                     catch (NotSupportedException)
                     {
-                        throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                        throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                     }
                     catch (Exception ex)
                     {
@@ -234,15 +234,15 @@ using System.Web;
                         }
                         catch (UnauthorizedAccessException)
                         {
-                            throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                            throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                         }
                         catch (PathTooLongException)
                         {
-                            throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
+                            throw new ByteTurnPathTooLongException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                         }
                         catch (NotSupportedException)
                         {
-                            throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                            throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                         }
                         catch (Exception ex)
                         {
@@ -251,7 +251,7 @@ using System.Web;
                     }
                     else
                     {
-                        throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                        throw new ByteTurnNotFoundException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
                     }
                 }
             }
@@ -262,14 +262,14 @@ using System.Web;
                     var placeholders = new List<string>();
                     placeholders.Add(path);
 
-                    throw new ByteTurnException(ErrorMessageOption.CREATE_FILE_EXISTS.ToErrorMessage(placeholders));
+                    throw new ByteTurnExistsException(ErrorMessageOption.CREATE_FILE_EXISTS.ToErrorMessage(placeholders));
                 }
                 else
                 {
                     var placeholders = new List<string>();
                     placeholders.Add(path);
 
-                    throw new ByteTurnException(ErrorMessageOption.CREATE_DIRECTORY_EXISTS.ToErrorMessage(placeholders));
+                    throw new ByteTurnExistsException(ErrorMessageOption.CREATE_DIRECTORY_EXISTS.ToErrorMessage(placeholders));
                 }                
             }
 
@@ -292,11 +292,11 @@ using System.Web;
 
             if (!File.Exists(currentPath) && !Directory.Exists(currentPath))
             {
-                throw new ByteTurnException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
+                throw new ByteTurnNotFoundException(ErrorMessageOption.FILE_DIRECTORY_NOT_FOUND.ToErrorMessage(placeHolders));
             }
             else if (Exists(destPath))
             {
-                throw new ByteTurnException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
+                throw new ByteTurnExistsException(ErrorMessageOption.COPY_MOVE_FILE_DIRECTORY_EXISTS.ToErrorMessage(placeHolders));
             }
             else if (File.Exists(currentPath) && !Exists(destPath))
             {
@@ -306,19 +306,19 @@ using System.Web;
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (PathTooLongException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
+                    throw new ByteTurnPathTooLongException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                 }
                 catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
+                    throw new ByteTurnIOException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
                 }
                 catch (NotSupportedException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {
@@ -333,19 +333,19 @@ using System.Web;
                 }
                 catch (UnauthorizedAccessException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnUnauthorisedAccessException(ErrorMessageOption.UNAUTHORISED.ToErrorMessage(placeHolders));
                 }
                 catch (PathTooLongException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
+                    throw new ByteTurnPathTooLongException(ErrorMessageOption.PATH_TOO_LONG.ToErrorMessage(placeHolders));
                 }
                 catch (IOException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
+                    throw new ByteTurnIOException(ErrorMessageOption.IO_ERROR.ToErrorMessage(placeHolders));
                 }
                 catch (NotSupportedException)
                 {
-                    throw new ByteTurnException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                    throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
                 }
                 catch (Exception ex)
                 {

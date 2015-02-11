@@ -48,6 +48,12 @@
     <Compile Include="Data\Listing\IListingData.cs" />
     <Compile Include="Data\Listing\ListingTypeOption.cs" />
     <Compile Include="Exception\ByteTurnUploadFileException.cs" />
+    <Compile Include="Exception\ByteTurnNotFoundException.cs" />
+    <Compile Include="Exception\ByteTurnIOException.cs" />
+    <Compile Include="Exception\ByteTurnExistsException.cs" />
+    <Compile Include="Exception\ByteTurnUnauthorisedAccessException.cs" />
+    <Compile Include="Exception\ByteTurnPathTooLongException.cs" />
+    <Compile Include="Exception\ByteTurnNotSupportedException.cs" />
     <Compile Include="Exception\ErrorMessageOption.cs" />
     <Compile Include="Exception\ByteTurnException.cs" />
     <Compile Include="Extensions\ErrorMessageExtensions.cs" />
