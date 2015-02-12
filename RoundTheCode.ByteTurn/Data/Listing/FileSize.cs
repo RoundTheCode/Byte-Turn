@@ -45,6 +45,15 @@ namespace RoundTheCode.ByteTurn.Data.Listing
             Terabytes = (float)Bytes / 1024 / 1024 / 1024 / 1024;
         }
 
+        /// <summary>
+        /// Compare an object to see if they are equal. Used for test plans.
+        /// </summary>
+        /// <param name="compareFileSize">Parse in an instance of FileSize to see if it equals this instance.</param>
+        /// <returns>True if the File Size property matches. False if not.</returns>
+        public bool IsEqual(FileSize compareFileSize)
+        {
+            return (this.Bytes == compareFileSize.Bytes && this.Kilobytes == compareFileSize.Kilobytes && this.Megabytes == compareFileSize.Megabytes && this.Gigabytes == compareFileSize.Gigabytes && this.Terabytes == compareFileSize.Terabytes);
+        }
 
     }
 }

@@ -20,7 +20,7 @@ namespace RoundTheCode.ByteTurn.Extensions
                 case ErrorMessageOption.FILE_IN_USE:
                     return ReturnErrorMessage("{p[0]}Unauthorised access to perform that action. The specified file is in use.", placeholders);
                 case ErrorMessageOption.UNAUTHORISED:
-                    return ReturnErrorMessage("{p[0]}Unauthorised access to perform that action. This may be due to insufficient permissions, the file is in use, or the file is read only.", placeholders);
+                    return ReturnErrorMessage("{p[0]}Unauthorised access to perform that action. This may be due to insufficient permissions{p[1]}.", placeholders);
                 case ErrorMessageOption.UNKNOWN:
                     return ReturnErrorMessage("{p[0]}An unknown error occured.", placeholders);
                 case ErrorMessageOption.PATH_TOO_LONG:
@@ -29,6 +29,22 @@ namespace RoundTheCode.ByteTurn.Extensions
                     return ReturnErrorMessage("{p[0]}An I/O error has occured.", placeholders);
                 case ErrorMessageOption.NOT_SUPPORTED:
                     return ReturnErrorMessage("{p[0]}The path name is in an invalid format.", placeholders);
+                case ErrorMessageOption.UPLOAD_ILLEGAL_FILE:
+                    return ReturnErrorMessage("Unable to upload the file. The file being uploaded needs to have an extension of {p[0]}.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_FAILURE:
+                    return ReturnErrorMessage("Unable to upload the file. This is likely due to insufficient permissions when uploading to '{p[0]}'.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_NOT_EXISTS:
+                    return ReturnErrorMessage("Unable to upload the file. The file does not exist.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_TOO_LARGE:
+                    return ReturnErrorMessage("Unable to upload the file. The file is too large. There is an upload limit of '{p[0]}'.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_EXISTS:
+                    return ReturnErrorMessage("Unable to upload the file. The file '{p[0]}' already exists.", placeholders);
+                case ErrorMessageOption.UPLOAD_FILE_UNAUTHORISED:
+                    return ReturnErrorMessage("Unable to upload the file. This is due to insufficient permissions when uploading to '{p[0]}'.", placeholders);
+                case ErrorMessageOption.CREATE_FILE_EXISTS:
+                    return ReturnErrorMessage("Unable to create the file '{p[0]}'. The file already exists.", placeholders);
+                case ErrorMessageOption.CREATE_DIRECTORY_EXISTS:
+                    return ReturnErrorMessage("Unable to create the directory '{p[0]}'. The directory already exists.", placeholders);
             }
             return "";
         }

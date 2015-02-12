@@ -64,7 +64,7 @@ namespace RoundTheCode.ByteTurn.Data.Listing
             Created = fileInfo.CreationTimeUtc;
             Modified = fileInfo.LastAccessTimeUtc;            
             Directory = fileInfo.DirectoryName;
-            Extension = fileInfo.Extension;            
+            Extension = fileInfo.Extension;                   
         }
     }
 }

@@ -14,6 +14,14 @@ namespace RoundTheCode.ByteTurn.Exception
         UNKNOWN = 5,
         PATH_TOO_LONG = 6,
         IO_ERROR = 7,
-        NOT_SUPPORTED = 8
+        NOT_SUPPORTED = 8,
+        UPLOAD_ILLEGAL_FILE = 9,        
+        UPLOAD_FILE_FAILURE = 10,
+        UPLOAD_FILE_NOT_EXISTS = 11,
+        UPLOAD_FILE_TOO_LARGE = 12,
+        UPLOAD_FILE_EXISTS = 13,
+        UPLOAD_FILE_UNAUTHORISED = 14,
+        CREATE_FILE_EXISTS = 15,
+        CREATE_DIRECTORY_EXISTS = 16
     }
 }

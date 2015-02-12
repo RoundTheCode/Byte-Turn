@@ -31,6 +31,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
@@ -46,11 +47,20 @@
     <Compile Include="Data\Listing\FileSize.cs" />
     <Compile Include="Data\Listing\IListingData.cs" />
     <Compile Include="Data\Listing\ListingTypeOption.cs" />
+    <Compile Include="Exception\ByteTurnUploadFileException.cs" />
+    <Compile Include="Exception\ByteTurnNotFoundException.cs" />
+    <Compile Include="Exception\ByteTurnIOException.cs" />
+    <Compile Include="Exception\ByteTurnExistsException.cs" />
+    <Compile Include="Exception\ByteTurnUnauthorisedAccessException.cs" />
+    <Compile Include="Exception\ByteTurnPathTooLongException.cs" />
+    <Compile Include="Exception\ByteTurnNotSupportedException.cs" />
     <Compile Include="Exception\ErrorMessageOption.cs" />
-    <Compile Include="Exception\FileMileException.cs" />
+    <Compile Include="Exception\ByteTurnException.cs" />
     <Compile Include="Extensions\ErrorMessageExtensions.cs" />
+    <Compile Include="Extensions\ListingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ListingService.cs" />
+    <Compile Include="Services\ListingService.Web.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="RoundTheCode.ByteTurn.nuspec" />
