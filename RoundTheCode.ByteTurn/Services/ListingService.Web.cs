@@ -17,12 +17,13 @@ namespace RoundTheCode.ByteTurn.Services
         /// <summary>
         /// Upload a file to a specific directory.
         /// </summary>
-        /// <param name="context">The HTTP context. If running from a web application, this would be HttpContext.</param>
-        /// <param name="file">The class that stores the file details.</param>
-        /// <param name="directory">The class that stores the file details.</param>
+        /// <param name="fileStream">The file stream that will be uploaded.</param>
+        /// <param name="file">The file name that will be saved.</param>
+        /// <param name="directory">The directory as to where the file will be saved.</param>
         /// <param name="allowedExtension">The extension that the file being uploaded should be. e.g. A text file would be 'txt'.</param>
+        /// <param name="duplicateListingAction">What action to take when the path already exists..</param>
         /// <returns>The full path as to where the file has been uploaded.</returns>
-        public static string WebUpload(HttpContextBase context, HttpPostedFileBase file, string directory, string allowedExtension, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
+        public static string WebUpload(Stream fileStream, string file, string directory, string allowedExtension, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
         {
             List<string> allowedExtensions = null;
             
@@ -30,21 +31,22 @@ namespace RoundTheCode.ByteTurn.Services
                 allowedExtensions = new List<string>();
                 allowedExtensions.Add(allowedExtension);
             }
-            
-            return WebUpload(context, file, directory, allowedExtensions, duplicateListingAction);
+
+            return WebUpload(fileStream, file, directory, allowedExtensions, duplicateListingAction);
         }
 
 
         /// <summary>
         /// Upload a file to a specific directory.
         /// </summary>
-        /// <param name="context">The HTTP context. If running from a web application, this would be HttpContext.</param>
-        /// <param name="file">The class that stores the file details.</param>
-        /// <param name="directory">The class that stores the file details.</param>
+        /// <param name="fileStream">The file stream that will be uploaded.</param>
+        /// <param name="file">The file name that will be saved.</param>
+        /// <param name="directory">The directory as to where the file will be saved.</param>
         /// <param name="allowedExtensions">A list of extensions that the file being uploaded should be. e.g. A text file would be 'txt'.</param>
-        /// <returns>The full path as to where the file has been uploaded.</returns>
-        public static string WebUpload(HttpContextBase context, HttpPostedFileBase file, string directory, List<string> allowedExtensions, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
-        {
+        /// <param name="duplicateListingAction">What action to take when the path already exists..</param>
+        /// <returns>The full path ass to where the file has been uploaded.</returns>
+        public static string WebUpload(Stream fileStream, string file, string directory, List<string> allowedExtensions, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
+        {            
             // File doesn't exist, so throw exception.
             if (file == null)
             {
@@ -73,7 +75,7 @@ namespace RoundTheCode.ByteTurn.Services
             var maxRequestLength = ListingExtensions.GetMaxRequestLength();
 
             // Convert file & directory to full path.
-            var path = ListingExtensions.FormatDirectory(directory) + @"\" + file.FileName;
+            var path = ListingExtensions.FormatDirectory(directory) + @"\" + file;
 
             if (allowedExtensions == null || allowedExtensions.FirstOrDefault(x => x.ToLower() == path.Substring(path.Length - x.Length, x.Length).ToLower()) == null)
             {
@@ -102,7 +104,7 @@ namespace RoundTheCode.ByteTurn.Services
                 throw new ByteTurnUploadFileException(ErrorMessageOption.UPLOAD_ILLEGAL_FILE.ToErrorMessage(placeholders));
             }
 
-            else if (file.ContentLength > maxRequestLength)
+            else if (fileStream.Length > maxRequestLength)
             {
                 // File is too large to upload, so error.
                 var placeholders = new List<string>();
@@ -128,8 +130,11 @@ namespace RoundTheCode.ByteTurn.Services
 
                 try
                 {
-                    // Save the file.
-                    file.SaveAs(path);
+                    using (var f = File.Create(path))
+                    {
+                        fileStream.Seek(0, SeekOrigin.Begin);
+                        fileStream.CopyTo(f);
+                    }
                 }
                 catch (UnauthorizedAccessException)
                 {                    

@@ -40,27 +40,39 @@ namespace RoundTheCode.ByteTurn.Extensions
         {
             var limit = (long)30000000;
 
-            Configuration configuration = WebConfigurationManager.OpenWebConfiguration("~");
-            var section = configuration.GetSection("system.webServer");
+            Configuration configuration = null;
 
-            if (section != null)
+            try
             {
-                long trylimit = 0;
-
-                var xml = section.SectionInformation.GetRawXml();
-                var doc = XDocument.Parse(xml);
-
-                if (doc.Root != null && doc.Root.Element("security") != null && doc.Root.Element("security").Element("requestFiltering") != null && doc.Root.Element("security").Element("requestFiltering").Element("requestLimits") != null && doc.Root.Element("security").Element("requestFiltering").Element("requestLimits").Attribute("maxAllowedContentLength") != null && long.TryParse(doc.Root.Element("security").Element("requestFiltering").Element("requestLimits").Attribute("maxAllowedContentLength").Value, out trylimit))
-                {
-                    limit = trylimit;
-                }
+                configuration = WebConfigurationManager.OpenWebConfiguration("~");
             }
-            else
+            catch (System.Exception)
             {
-                HttpRuntimeSection s2 = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
-                if (s2 != null)
+                configuration = null;
+            }
+            if (configuration != null)
+            {
+                var section = configuration.GetSection("system.webServer");
+
+                if (section != null)
                 {
-                    limit = s2.MaxRequestLength;
+                    long trylimit = 0;
+
+                    var xml = section.SectionInformation.GetRawXml();
+                    var doc = XDocument.Parse(xml);
+
+                    if (doc.Root != null && doc.Root.Element("security") != null && doc.Root.Element("security").Element("requestFiltering") != null && doc.Root.Element("security").Element("requestFiltering").Element("requestLimits") != null && doc.Root.Element("security").Element("requestFiltering").Element("requestLimits").Attribute("maxAllowedContentLength") != null && long.TryParse(doc.Root.Element("security").Element("requestFiltering").Element("requestLimits").Attribute("maxAllowedContentLength").Value, out trylimit))
+                    {
+                        limit = trylimit;
+                    }
+                }
+                else
+                {
+                    HttpRuntimeSection s2 = ConfigurationManager.GetSection("system.web/httpRuntime") as HttpRuntimeSection;
+                    if (s2 != null)
+                    {
+                        limit = s2.MaxRequestLength;
+                    }
                 }
             }
             return limit;
