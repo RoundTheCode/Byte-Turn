@@ -196,7 +196,7 @@ namespace RoundTheCode.ByteTurn.Test
             // Upload a PNG.
             using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
             {
-                p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.NoAction);
+                p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.NoAction);
                 sf.Close();
             }
 
@@ -209,7 +209,7 @@ namespace RoundTheCode.ByteTurn.Test
             {
                 using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
                 {
-                    p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.NoAction);
+                    p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.NoAction);
                     sf.Close();
                 }
                 Assert.Fail();
@@ -225,7 +225,7 @@ namespace RoundTheCode.ByteTurn.Test
             {
                 using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
                 {
-                    p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-2.gif", path, "png", DuplicateListingActionOption.NoAction);
+                    p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-2.gif", path, "png", DuplicateListingActionOption.NoAction);
                     sf.Close();
                 }
                 Assert.Fail();
@@ -240,7 +240,7 @@ namespace RoundTheCode.ByteTurn.Test
             {
                 using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
                 {
-                    p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCatpng", path, "png", DuplicateListingActionOption.NoAction);
+                    p = ListingService.Upload(sf.BaseStream, "BarcelonaCatpng", path, "png", DuplicateListingActionOption.NoAction);
                     sf.Close();
                 }
                 Assert.Fail();
@@ -256,7 +256,7 @@ namespace RoundTheCode.ByteTurn.Test
             // Upload a PNG.
             using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
             {
-                p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-3.png", path, allowedExtensions, DuplicateListingActionOption.NoAction);
+                p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-3.png", path, allowedExtensions, DuplicateListingActionOption.NoAction);
                 sf.Close();
             }
 
@@ -268,7 +268,7 @@ namespace RoundTheCode.ByteTurn.Test
             {
                 using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
                 {
-                    p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-2.jpg", path, allowedExtensions, DuplicateListingActionOption.NoAction);
+                    p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-2.jpg", path, allowedExtensions, DuplicateListingActionOption.NoAction);
                     sf.Close();
                 }
                 Assert.Fail();
@@ -283,7 +283,7 @@ namespace RoundTheCode.ByteTurn.Test
             {
                 using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
                 {
-                    p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCatpng", path, allowedExtensions, DuplicateListingActionOption.NoAction);
+                    p = ListingService.Upload(sf.BaseStream, "BarcelonaCatpng", path, allowedExtensions, DuplicateListingActionOption.NoAction);
                     sf.Close();
                 }
                 Assert.Fail();
@@ -296,7 +296,7 @@ namespace RoundTheCode.ByteTurn.Test
             // Overwrite file.
             using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
             {
-                p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.Overwrite);
+                p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.Overwrite);
                 sf.Close();
             }
 
@@ -307,7 +307,7 @@ namespace RoundTheCode.ByteTurn.Test
             // Append number.
             using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
             {
-                p = ListingService.WebUpload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.AppendNumber);
+                p = ListingService.Upload(sf.BaseStream, "BarcelonaCat-2.png", path, "png", DuplicateListingActionOption.AppendNumber);
                 sf.Close();
             }
 

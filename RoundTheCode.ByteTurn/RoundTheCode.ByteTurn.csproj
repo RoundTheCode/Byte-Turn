@@ -60,10 +60,11 @@
     <Compile Include="Extensions\ListingExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\ListingService.cs" />
-    <Compile Include="Services\ListingService.Web.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="RoundTheCode.ByteTurn.nuspec" />
+    <None Include="RoundTheCode.ByteTurn.nuspec">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
