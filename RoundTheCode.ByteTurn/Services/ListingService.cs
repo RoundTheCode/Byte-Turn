@@ -15,6 +15,35 @@ using System.Web;
 
     public static partial class ListingService
     {
+
+        static bool IsPathOK(string path)
+        {
+            var characters = Path.GetInvalidPathChars();
+
+            for (var tt = 1; tt <= characters.Length; tt++)
+            {
+                if (path.Contains(characters[tt-1]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        static bool IsFilenameOK(string filename)
+        {
+            var characters = Path.GetInvalidFileNameChars();
+
+            for (var tt = 1; tt <= characters.Length; tt++)
+            {
+                if (filename.Contains(characters[tt-1]))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
         /// <summary>
         /// What to do when a file or directory being moved or copied already exists in it's specified destination path.
         /// </summary>
@@ -54,6 +83,12 @@ using System.Web;
         {
             var placeHolders = new List<string>();
             placeHolders.Add("Unable to delete the file or directory '" + path + ". ");
+
+            // Path not ok, so throw error.
+            if (!IsPathOK(path))
+            {
+                throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+            }
 
             if (File.Exists(path))
             {
@@ -127,10 +162,17 @@ using System.Web;
         /// <returns>The path name as to where the file was copied to.</returns>
         public static string Copy(string currentPath, string destPath, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
         {
+
+
             destPath = DuplicateListingActions(destPath, duplicateListingAction);
 
             var placeHolders = new List<string>();
             placeHolders.Add("Unable to copy the file '" + currentPath + "' to '" + destPath + ". ");
+
+            if (!IsPathOK(currentPath) || !IsPathOK(destPath))
+            {
+                throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+            }
 
             if (!File.Exists(currentPath))
             {
@@ -181,6 +223,8 @@ using System.Web;
         /// <returns>The path name as to where the file was created to.</returns>
         public static string Create(string name, string path, ListingTypeOption listingType, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
         {
+
+
             string originalPath = path;
 
             var placeHolders = new List<string>();
@@ -198,6 +242,11 @@ using System.Web;
                 if (listingType == ListingTypeOption.Directory)
                 {
                     placeHolders.Add("Unable to create the directory '" + path + "'. ");
+
+                    if (!IsFilenameOK(name) || !IsPathOK(path))
+                    {
+                        throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                    }
 
                     try
                     {
@@ -223,6 +272,12 @@ using System.Web;
                 else if (listingType == ListingTypeOption.File)
                 {
                     placeHolders.Add("Unable to create the file '" + name + "' into '" + originalPath + ". ");
+
+                    if (!IsFilenameOK(name) || !IsPathOK(path))
+                    {
+                        throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+                    }
+
                     placeHolders.Add(", the file is in use, or the file is read only");
 
                     if (Directory.Exists(originalPath))
@@ -287,6 +342,11 @@ using System.Web;
         {
             var placeHolders = new List<string>();
             placeHolders.Add("Unable to move the file or directory '" + currentPath + "' to '" + destPath + ". ");
+
+            if (!IsPathOK(currentPath) || !IsPathOK(destPath))
+            {
+                throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+            }
 
             destPath = DuplicateListingActions(destPath, duplicateListingAction);
 
@@ -446,6 +506,14 @@ using System.Web;
         /// <returns>The full path ass to where the file has been uploaded.</returns>
         public static string Upload(Stream fileStream, string file, string directory, List<string> allowedExtensions, DuplicateListingActionOption duplicateListingAction = DuplicateListingActionOption.NoAction)
         {
+            if (!IsPathOK(directory) || !IsFilenameOK(file))
+            {
+                var placeHolders = new List<string>();
+                placeHolders.Add("Unable to upload the file.");
+
+                throw new ByteTurnNotSupportedException(ErrorMessageOption.NOT_SUPPORTED.ToErrorMessage(placeHolders));
+            }
+
             // File doesn't exist, so throw exception.
             if (file == null)
             {

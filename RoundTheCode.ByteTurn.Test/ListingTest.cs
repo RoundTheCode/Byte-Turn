@@ -80,6 +80,17 @@ namespace RoundTheCode.ByteTurn.Test
                 Assert.AreEqual(typeof(ByteTurnExistsException), byteturnex.GetType());
             }
 
+            // Illegal characters.
+            try
+            {
+                ListingService.Create("testfile|.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
+                Assert.Fail();
+            }
+            catch (ByteTurnNotSupportedException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnNotSupportedException), byteturnex.GetType());
+            }
+
             var p = ListingService.Create("testfile-2.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
 
             Assert.AreEqual(p, path + @"\testfile-2.txt");
@@ -107,6 +118,17 @@ namespace RoundTheCode.ByteTurn.Test
             var f = ListingService.Copy(path + @"\testfile-4.txt", path + @"\testfile-42.txt", DuplicateListingActionOption.NoAction);
             Assert.AreEqual(f, path + @"\testfile-42.txt");
             Assert.AreEqual(ListingService.Exists(path + @"\testfile-42.txt"), true);
+
+            // Illegal characters.
+            try
+            {
+                f = ListingService.Copy(path + @"\testfile-4|.txt", path + @"\testfile-42|.txt", DuplicateListingActionOption.NoAction);
+                Assert.Fail();
+            }
+            catch (ByteTurnNotSupportedException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnNotSupportedException), byteturnex.GetType());
+            }
 
             // No action - file exists.
             try
@@ -144,6 +166,17 @@ namespace RoundTheCode.ByteTurn.Test
                 Assert.AreEqual(typeof(ByteTurnNotFoundException), byteturnex.GetType());
             }
 
+            // Illegal characters.
+            try
+            {
+                ListingService.Delete(path + @"\dele|te.txt");
+                Assert.Fail();
+            }
+            catch (ByteTurnNotSupportedException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnNotSupportedException), byteturnex.GetType());
+            }
+
             var p = ListingService.Create("testfile-3.txt", path, ListingTypeOption.File, DuplicateListingActionOption.NoAction);
 
             ListingService.Delete(path + @"\testfile-3.txt");
@@ -172,6 +205,17 @@ namespace RoundTheCode.ByteTurn.Test
             catch (ByteTurnExistsException byteturnex)
             {
                 Assert.AreEqual(typeof(ByteTurnExistsException), byteturnex.GetType());
+            }
+
+            // Illegal characters.
+            try
+            {
+                f = ListingService.Move(path + @"\testf|ile-51.txt", path + @"\testfil|e-52.txt", DuplicateListingActionOption.NoAction);
+                Assert.Fail();
+            }
+            catch (ByteTurnNotSupportedException byteturnex)
+            {
+                Assert.AreEqual(typeof(ByteTurnNotSupportedException), byteturnex.GetType());
             }
 
             // Overwrite
@@ -217,6 +261,21 @@ namespace RoundTheCode.ByteTurn.Test
             catch (ByteTurnExistsException ex)
             {
                 Assert.AreEqual(typeof(ByteTurnExistsException), ex.GetType());
+            }
+
+            // Illegal characters.
+            try
+            {
+                using (var sf = new StreamReader(path + @"\BarcelonaCat.png"))
+                {
+                    p = ListingService.Upload(sf.BaseStream, "Barce|lonaCat-2.png", path + "|", "png", DuplicateListingActionOption.NoAction);
+                    sf.Close();
+                }
+                Assert.Fail();
+            }
+            catch (ByteTurnNotSupportedException ex)
+            {
+                Assert.AreEqual(typeof(ByteTurnNotSupportedException), ex.GetType());
             }
 
 
